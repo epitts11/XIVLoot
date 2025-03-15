@@ -1,10 +1,7 @@
 name: Build and publish image from leonBranch to Docker Hub
 
 on:
-  push:
-    branches: [ "leonBranch" ]
-  pull_request:
-    branches: [ "leonBranch" ]
+  [workflow_dispatch]
 
 jobs:
 
