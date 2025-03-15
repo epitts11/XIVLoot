@@ -17,6 +17,8 @@ FROM nginx:latest
 
 COPY ./ffxiv-raid-loot-frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
+RUN ls /app/dist/
+
 COPY --from=build /app/dist/ffxiv-raid-loot-web-app/browser /usr/share/nginx/html
 
 EXPOSE 80
