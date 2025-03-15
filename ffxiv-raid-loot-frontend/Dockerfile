@@ -1,6 +1,6 @@
 FROM node:alpine as build
 
-WORKDIR /ffxiv-raid-loot-frontend/src/app
+WORKDIR /app
 
 COPY ./ffxiv-raid-loot-frontend/package*.json ./
 
@@ -10,7 +10,8 @@ RUN npm install -g @angular/cli
 
 COPY . .
 
-RUN node_modules/.bin/ng build --configuration=production
+RUN cd ./ffixv-raid-loot-frontend \ 
+node_modules/.bin/ng build --configuration=production
 
 FROM nginx:latest
 
