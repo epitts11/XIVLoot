@@ -12,9 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build -f FFXIV-RaidLootAPI/Dockerfile -t ffxiv-raidlootapi .
-    - name: Tag the image
-      run: docker tag xivloot-app rickchinois/ffxivraidlootapi:dev
+      run: docker build -f FFXIV-RaidLootAPI/Dockerfile -t rickchinois/ffxivraidlootapi:dev 
     - name: Push image to docker hub
       run: |
         docker login -u rickchinois -p $({secrets.DOCKER_HUB_TOKEN})
