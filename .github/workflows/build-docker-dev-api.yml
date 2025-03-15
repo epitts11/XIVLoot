@@ -19,4 +19,6 @@ jobs:
     - name: Tag the image
       run: docker tag xivloot-app rickchinois/ffxivraidlootapi:dev
     - name: Push image to docker hub
-      run: docker push rickchinois/ffxivraidlootapi:dev
+      run: |
+        docker login -u rickchinois -p $({secrets.DOCKER_HUB_TOKEN})
+        docker push rickchinois/ffxivraidlootapi:dev
