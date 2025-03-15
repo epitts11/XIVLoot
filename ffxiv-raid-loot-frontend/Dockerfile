@@ -2,7 +2,7 @@ FROM node:alpine as build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY ./ffxiv-raid-loot-frontend/package*.json ./
 
 RUN npm install
 
