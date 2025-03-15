@@ -1,0 +1,22 @@
+name: Build and publish image from leonBranch to Docker Hub
+
+on:
+  push:
+    branches: [ "leonBranch" ]
+  pull_request:
+    branches: [ "leonBranch" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build -f FFXIV-RaidLootAPI/Dockerfile -t ffxiv-raidlootapi .
+    - name: Tag the image
+      run: docker tag xivloot-app rickchinois/ffxivraidlootapi:dev
+    - name: Push image to docker hub
+      run: docker push rickchinois/ffxivraidlootapi:dev
