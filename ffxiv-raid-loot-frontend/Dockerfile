@@ -1,6 +1,6 @@
 FROM node:alpine as build
 
-WORKDIR /app
+WORKDIR /ffxiv-raid-loot-frontend/src/app
 
 COPY ./ffxiv-raid-loot-frontend/package*.json ./
 
