@@ -113,6 +113,47 @@ export class StaticDetailComponent implements OnInit {
     }
   }
 
+  getTurnImage(turn : number){
+    switch(turn){
+      case 1:
+        switch (this.staticDetail.Tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_1_d.png";
+        }
+      case 2:
+        switch (this.staticDetail.Tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_2_d.png";
+        }
+      case 3:
+        switch (this.staticDetail.Tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_3_d.png";
+        }
+      case 4:
+        switch (this.staticDetail.Tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_4_d.png";
+        }
+    }
+  }
+
   DecrementselectedPlayerSubList(){
     if (this.selectedPlayerSubList > 0){
       this.selectedPlayerSubList--;
@@ -266,7 +307,6 @@ export class StaticDetailComponent implements OnInit {
         });
       });
     }
-
    }
 
    SwapAltPlayer(player : Player){
@@ -310,7 +350,7 @@ export class StaticDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.test = true;
-    this.staticDetail = new Static(0, "", "", [], {});
+    this.staticDetail = new Static(0, "", "",0, [], {});
 
     // Subscribe to route parameters to get the 'uuid'
     this.route.params.subscribe(params => {
@@ -356,10 +396,6 @@ export class StaticDetailComponent implements OnInit {
 
         this.GeneratePlayerListShower();
         this.selectedPlayerSubList = 0;
-
-
-
-
 
         this.http.GetGearAcqHistory(this.uuid, this.ShowNumberLastWeekHistory).subscribe(async data => {
           this.GearAcqHistory = data["info"];

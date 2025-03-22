@@ -340,8 +340,8 @@ namespace FFXIV_RaidLootAPI.Controllers
             }
             
         }
-        [HttpGet("GetGearOption/{Job}/{GearType}")]
-        public async Task<ActionResult<GearOptionsDTO>> GetGearOption(Job Job, GearType GearType)
+        [HttpGet("GetGearOption/{Job}/{GearType}/{Tier}")]
+        public async Task<ActionResult<GearOptionsDTO>> GetGearOption(Job Job, GearType GearType, Tier Tier)
         {
         // THIS FUNCTION HAS BEEN REWRITTEN AS A GEAR CLASS FUNCTION
         // GEAR.GetGearOptions()
@@ -366,7 +366,7 @@ namespace FFXIV_RaidLootAPI.Controllers
             {
                 GearCategory GearToChooseFrom = Gear.JOB_TO_GEAR_CATEGORY_MAP[Job][(int) GearType >=7 ? 1 : 0];
                 // Left side is index 0 right side is index 1
-                IEnumerable<Gear> GearIterFromDb = context.Gears.Where(g => g.GearCategory == GearToChooseFrom && g.GearType == GearType);
+                IEnumerable<Gear> GearIterFromDb = context.Gears.Where(g => g.GearCategory == GearToChooseFrom && g.GearType == GearType && g.Tier == Tier);
                 foreach (Gear gear in GearIterFromDb)
                 {
                     OptionList.Add(new GearOptionsDTO.GearOption()

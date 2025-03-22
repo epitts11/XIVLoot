@@ -566,7 +566,7 @@ namespace FFXIV_RaidLootAPI.Models
             Dictionary<string, GearOptionsDTO> GearOptionPerGearType = new Dictionary<string, GearOptionsDTO>();
 
             foreach (GearType GearType in Enum.GetValues(typeof(GearType))){
-                GearOptionPerGearType[GearType.ToString()] = Gear.GetGearOptions(GearType, Job, context);
+                GearOptionPerGearType[GearType.ToString()] = Gear.GetGearOptions(GearType, Job, context, Static.Tier);
             }
             List<decimal> GearInfo = Static.ComputeNumberRaidBuffsAndGroupAvgLevel(context);
             decimal NumberRaidBuffs = GearInfo[0];

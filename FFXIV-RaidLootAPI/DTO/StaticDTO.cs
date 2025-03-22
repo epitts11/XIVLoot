@@ -42,4 +42,5 @@ public class StaticDTO
     public string UUID { get; set; } = string.Empty;
     public Dictionary<string, int> LockParam { get; set; } = new Dictionary<string, int>();
     public List<PlayerInfoDTO> PlayersInfoList { get; set; } = new List<PlayerInfoDTO>();
+    public Tier Tier {get;set;} = Tier.SEVEN_ZERO;
 }

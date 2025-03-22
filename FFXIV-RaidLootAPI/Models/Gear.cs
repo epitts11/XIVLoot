@@ -109,6 +109,7 @@ namespace FFXIV_RaidLootAPI.Models
         public Job GearWeaponCategory {get; set;} = Job.Empty;
         public string IconPath {get; set;} = string.Empty;
         public int EtroGearId {get;set;}
+        public Tier Tier {get;set;}
         //public int XivApiGearId {get;set;}
         
         // XIVGear and Etro both share Ids matching with XIVAPI. To facilitate we will simply use the field EtroGearId which represents the ID available on XIVAPI.
@@ -292,7 +293,7 @@ namespace FFXIV_RaidLootAPI.Models
 
         }
 
-        public static GearOptionsDTO GetGearOptions(GearType GearType, Job Job, DataContext context)
+        public static GearOptionsDTO GetGearOptions(GearType GearType, Job Job, DataContext context, Tier Tier)
         {   /*Returns a GearOptionsDTO which is a list of GearOption. Each gear options
               has the gear name, the gear ilevel and the gear stage (raid/augmented/crafted/tome)
               Job -> Job to request the gear for 
@@ -310,7 +311,7 @@ namespace FFXIV_RaidLootAPI.Models
             };
             if (GearType == GearType.Weapon)
             {
-                List<Gear> GearIterFromDb = context.Gears.Where(g => g.GearWeaponCategory == Job && g.GearCategory == GearCategory.Weapon).OrderBy(g => g.GearLevel).ToList();
+                List<Gear> GearIterFromDb = context.Gears.Where(g => g.GearWeaponCategory == Job && g.GearCategory == GearCategory.Weapon && (g.Tier == Tier || g.Tier == Tier.None)).OrderBy(g => g.GearLevel).ToList();
                 foreach (Gear gear in GearIterFromDb)
                 {
                     if (gear.GearLevel >= MIN_LEVEL)
@@ -327,7 +328,7 @@ namespace FFXIV_RaidLootAPI.Models
             {
                 GearCategory GearToChooseFrom = Gear.JOB_TO_GEAR_CATEGORY_MAP[Job][(int) GearType >=7 ? 1 : 0];
                 // Left side is index 0 right side is index 1
-                List<Gear> GearIterFromDb = context.Gears.Where(g => g.GearCategory == GearToChooseFrom && g.GearType == GearType).OrderBy(g => g.GearLevel).ToList();
+                List<Gear> GearIterFromDb = context.Gears.Where(g => g.GearCategory == GearToChooseFrom && g.GearType == GearType && (g.Tier == Tier || g.Tier == Tier.None)).OrderBy(g => g.GearLevel).ToList();
                 foreach (Gear gear in GearIterFromDb)
                 {   
                     if (gear.GearLevel >= MIN_LEVEL)
