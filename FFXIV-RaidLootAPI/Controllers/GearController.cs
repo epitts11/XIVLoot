@@ -20,6 +20,7 @@ namespace FFXIV_RaidLootAPI.Controllers
             _context = context;
         }
 
+#region Populate Database
         /*
         [HttpPost("PopulateDatabase")]
         public async Task<ActionResult> PopulateDatabase(int StartingIndex, int EndIndex){
@@ -93,9 +94,9 @@ namespace FFXIV_RaidLootAPI.Controllers
             return Ok();
             }
             }
-        }*/
+        }
 
-        /*
+        
         [HttpPost("UpdateDatabaseEtro")]
         public async Task<ActionResult> UpdateDatabaseEtro(int StartingIndex, int EndIndex){
             using (var context = _context.CreateDbContext())
@@ -190,7 +191,7 @@ namespace FFXIV_RaidLootAPI.Controllers
         }*/
 
         // To Use this function remove the comment under to be able to call it with API
-        /*
+        
         //[HttpPost("UpdateDatabaseXivAPI")]
         public async Task<ActionResult> UpdateDatabaseXivAPI(int StartingIndex, int EndIndex){
             using (var context = _context.CreateDbContext())
@@ -301,8 +302,8 @@ namespace FFXIV_RaidLootAPI.Controllers
             }
             }
         }
-        */
-
+        
+#endregion
         private GearType getGearTypeFromInfo(Dictionary<string,object> equipSlot){
             if (equipSlot["Body"].ToString() == "1") 
                 return GearType.Body;
