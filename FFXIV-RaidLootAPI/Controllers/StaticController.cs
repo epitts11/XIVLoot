@@ -27,7 +27,7 @@ namespace FFXIV_RaidLootAPI.Controllers
             
         }
 
-                async private Task<bool> UserHasClaimedPlayerFromSameStatic<T>(T user, string playerId, DataContext context, int staticId) where T : IUserInterface{
+        async private Task<bool> UserHasClaimedPlayerFromSameStatic<T>(T user, string playerId, DataContext context, int staticId) where T : IUserInterface{
             // Now checks if this user claimed a player from the static. In which case they can edit this player.
 
             Players? player = await context.Players.FirstOrDefaultAsync(p => p.Id == int.Parse(playerId));

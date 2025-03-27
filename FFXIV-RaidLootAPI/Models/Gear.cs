@@ -9,8 +9,8 @@ namespace FFXIV_RaidLootAPI.Models
         public static readonly List<Tuple<Tier, int>> LIST_TIER_AND_I_LEVEL = new List<Tuple<Tier, int>>()
         {
             new Tuple<Tier, int>(Tier.SEVEN_ZERO, 700),
-            new Tuple<Tier, int>(Tier.None, 740),
-            new Tuple<Tier, int>(Tier.None, 770),
+            new Tuple<Tier, int>(Tier.SEVEN_TWO, 740),
+            new Tuple<Tier, int>(Tier.SEVEN_TWO, 770),
         };
         public static readonly int ACCESSORY_TOME_COST = 375;
         public static readonly int ARMOR_LOW_COST = 495; // Head, Hands, feet
@@ -19,7 +19,7 @@ namespace FFXIV_RaidLootAPI.Models
         private static readonly Dictionary<Tier, string> TOME_GEAR = new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Quetzalli"},
-            {Tier.SEVEN_TWO, "NO_NAME"}
+            {Tier.SEVEN_TWO, "Historia"}
         };
         private static readonly Dictionary<Tier, string> RAID_GEAR = 
         new Dictionary<Tier, string>()
@@ -38,13 +38,13 @@ namespace FFXIV_RaidLootAPI.Models
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Archeo"},
-            {Tier.SEVEN_TWO, "NO_NAME"}
+            {Tier.SEVEN_TWO, "Ceremonial"}
         };
         private static readonly Dictionary<Tier, string> NORMAL_RAID = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Light-heavy"},
-            {Tier.SEVEN_TWO, "NO_NAME"}
+            {Tier.SEVEN_TWO, "Cruiser"}
         };
         private static readonly Dictionary<Tier, string> EX_TRIAL = 
         new Dictionary<Tier, string>()
@@ -64,7 +64,7 @@ namespace FFXIV_RaidLootAPI.Models
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Skyruin"},
-            {Tier.SEVEN_TWO, "NO_NAME"}
+            {Tier.SEVEN_TWO, "Queensknight"}
         }; 
 
 
@@ -170,9 +170,8 @@ namespace FFXIV_RaidLootAPI.Models
         {   
             // First figure out the tier of the gear.
             int.TryParse(ItemLevel, out int iLevel);
-
             Tuple<Tier, int> tierofGear = LIST_TIER_AND_I_LEVEL.FirstOrDefault(t => t.Item2 >= iLevel) ?? LIST_TIER_AND_I_LEVEL.First();
-            Tier gearTier = Tier.None;
+            Tier gearTier = Tier.SEVEN_TWO;
             if (tierofGear != null)
             {
                 gearTier = tierofGear.Item1;
@@ -194,6 +193,8 @@ namespace FFXIV_RaidLootAPI.Models
                 stage = GearStage.Tome_Early;
             else if (name.IndexOf(EX_WEAPON[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Extreme;
+            else if (name.IndexOf(CRAFTED_GEAR[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
+                stage = GearStage.Preparation;
 
             GearType type = gearType;
             bool FoundMatch = true;
@@ -432,7 +433,8 @@ namespace FFXIV_RaidLootAPI.Models
         Extreme = 5,
         Raid_Normal = 6,
         Tome_Early = 7,
-        Artifact = 8
+        Artifact = 8,
+        Alliance_Raid = 9
     }
 
     public enum GearType
