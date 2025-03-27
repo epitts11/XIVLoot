@@ -183,6 +183,7 @@ export class Player {
             break;
           case "Bracelets":
             p.BraceletsChoice.push(Gear.GearFromDict(d));
+            console.log(p.BraceletsChoice);
             break;
           case "RightRing":
             p.RightRingChoice.push(Gear.GearFromDict(d));

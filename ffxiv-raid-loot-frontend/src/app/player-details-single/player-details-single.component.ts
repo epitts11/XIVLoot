@@ -41,6 +41,7 @@ export class PlayerDetailsSingleComponent {
                     "Scholar", "Ninja", "Samurai", "Reaper", "Monk", "Dragoon", "Gunbreaker", "DarkKnight",
                     "Paladin", "Warrior", "Machinist", "Bard", "Dancer", "Pictomancer", "Viper"];
   @Input({required:true}) player! : Player;
+  @Input({required:true}) tier! : number;
   @ViewChild('etroField') etroInputRef: ElementRef;
 
   public GetGroupColorNoAlpha : string;
@@ -79,6 +80,47 @@ export class PlayerDetailsSingleComponent {
         color : "red"
       }
     });
+  }
+
+  getTurnImage(turn : number){
+    switch(turn){
+      case 1:
+        switch (this.tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_1_d.png";
+        }
+      case 2:
+        switch (this.tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_2_d.png";
+        }
+      case 3:
+        switch (this.tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_3_d.png";
+        }
+      case 4:
+        switch (this.tier){
+          case 2:
+            return "assets/raid/no_image.png";
+          case 1:
+            return "assets/raid/no_image.png";
+          case 0:
+            return "assets/raid/turn_4_d.png";
+        }
+    }
   }
 
   async onChangeGear(GearType : string, bis : boolean, event: Event){

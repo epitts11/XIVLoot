@@ -24,7 +24,7 @@ constructor(public http: HttpClient, public data: DataService, private _snackBar
         map(response => {
           //console.log("Get Static Answer");
           //console.log(response);
-          let currentStatic = new Static(response['id'], response['name'], response['uuid'], response['playersInfoList'], response['lockParam']);
+          let currentStatic = new Static(response['id'], response['name'], response['uuid'],  response['tier'], response['playersInfoList'], response['lockParam']);
           return currentStatic;
         }),
         catchError(error => throwError(error))
@@ -170,8 +170,8 @@ constructor(public http: HttpClient, public data: DataService, private _snackBar
     );
   }
 
-  AddStatic(name : string) : Observable<any>{
-    const url = `${this.api}Static/CreateNewStatic/${name}`;
+  AddStatic(name : string, Tier : number) : Observable<any>{
+    const url = `${this.api}Static/CreateNewStatic/${name}/${Tier}`;
 
     return this.http.put(url, {}, { withCredentials : true,responseType: 'text'}).pipe(
       catchError(error => throwError(() => new Error('Failed to add static: ' + error.message)))

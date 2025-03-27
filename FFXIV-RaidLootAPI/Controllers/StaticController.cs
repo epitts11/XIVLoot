@@ -27,7 +27,7 @@ namespace FFXIV_RaidLootAPI.Controllers
             
         }
 
-                async private Task<bool> UserHasClaimedPlayerFromSameStatic<T>(T user, string playerId, DataContext context, int staticId) where T : IUserInterface{
+        async private Task<bool> UserHasClaimedPlayerFromSameStatic<T>(T user, string playerId, DataContext context, int staticId) where T : IUserInterface{
             // Now checks if this user claimed a player from the static. In which case they can edit this player.
 
             Players? player = await context.Players.FirstOrDefaultAsync(p => p.Id == int.Parse(playerId));
@@ -583,7 +583,8 @@ namespace FFXIV_RaidLootAPI.Controllers
                     Name = dbStatic.Name,
                     UUID = dbStatic.UUID,
                     LockParam=dbStatic.GetLockParam(),
-                    PlayersInfoList = PlayersInfoList
+                    PlayersInfoList = PlayersInfoList,
+                    Tier = dbStatic.Tier
                 };
 
                 return Ok(aStatic);
@@ -639,8 +640,8 @@ namespace FFXIV_RaidLootAPI.Controllers
         }
 
 // Add a new static        
-        [HttpPut("CreateNewStatic/{name}")]
-        public async Task<ActionResult<string>> AddStatic(string name)
+        [HttpPut("CreateNewStatic/{name}/{tier}")]
+        public async Task<ActionResult<string>> AddStatic(string name, int tier)
         {
             using (var context = _context.CreateDbContext())
             {
@@ -669,7 +670,8 @@ namespace FFXIV_RaidLootAPI.Controllers
                 {
                     Name = name,
                     UUID = uuid,
-                    ownerIdString=userId
+                    ownerIdString=userId,
+                    Tier = (Tier)tier
                 };
                 await context.Statics.AddAsync(newStatic);
                 await context.SaveChangesAsync();

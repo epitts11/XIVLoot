@@ -106,7 +106,7 @@ namespace FFXIV_RaidLootAPI.Controllers
             return false;
         }
 
-        async public Task<bool> UserIsAuthorized(HttpContext HttpContext, string playerId, DataContext context){
+        async private Task<bool> UserIsAuthorized(HttpContext HttpContext, string playerId, DataContext context){
             //Console.WriteLine("Checking authorization");
             if (HttpContext.Request.Cookies.TryGetValue("jwt_xivloot", out var jwt)){
                 
