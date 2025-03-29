@@ -18,8 +18,7 @@ jobs:
       run: |
         docker build -f FFXIV-RaidLootAPI/Dockerfile -t rickchinois/ffxivraidlootapi:latest .
         echo "Connection string format check (showing only Server part):"
-        echo "${{ secrets.DB_CONNECTION_STRING }}"
-        docker run -e DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" -e JWT_KEY="${{secrets.JWT_KEY}}" rickchinois/ffxivraidlootapi:latest
+        docker run -e "DB_CONNECTION_STRING='${{ secrets.DB_CONNECTION_STRING }}'" -e "JWT_KEY='${{secrets.JWT_KEY}}'" rickchinois/ffxivraidlootapi:latest
     - name: Push API image to docker hub
       run: |
         docker login -u rickchinois -p ${{secrets.DOCKER_HUB_TOKEN}}
