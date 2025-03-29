@@ -17,7 +17,7 @@ jobs:
     - name: Variable substitution
       uses: microsoft/variable-substitution@v1
       with:
-        files: '${{env.DOTNET_ROOT}}/FFXIV-RaidLootAPI/appsettings.json'
+        files: FFXIV-RaidLootAPI/appsettings.json'
       env:
         ConnectionStrings.DockerConnection: ${{ secrets.DB_CONNECTION_STRING }}
         JwtSettings.Key: ${{ secrets.JWT_KEY }}
