@@ -16,15 +16,10 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the API Docker image
       run: |
+        DECODED_VALUE=$(echo "${{ secrets.DB_CONNECTION_STRING }}" | base64 --decode)
         docker build -f FFXIV-RaidLootAPI/Dockerfile -t rickchinois/ffxivraidlootapi:latest .
-        # Debug connection string format (showing structure without sensitive data)
-        echo "Connection string parts check:"
-        echo "${{ secrets.DB_CONNECTION_STRING }}" | tr ';' '\n' | sed 's/=.*/=****/' > connection_debug.txt
-        cat connection_debug.txt
-        echo "DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}" > .env
-        echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> .env
-        docker run --env-file .env rickchinois/ffxivraidlootapi:latest
-        rm .env connection_debug.txt  # Clean up
+        docker run -e DB_CONNECTION_STRING=$DECODED_VALUE -e JWT_TOKEN="${{ secrets.JWT_TOKEN }}" rickchinois/ffxivraidlootapi:latest
+        
     - name: Push API image to docker hub
       run: |
         docker login -u rickchinois -p ${{secrets.DOCKER_HUB_TOKEN}}
