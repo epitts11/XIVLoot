@@ -27,5 +27,5 @@ jobs:
         
     - name: Push API image to docker hub
       run: |
-        docker login -u rickchinois -p ${{secrets.DOCKER_HUB_TOKEN}}
-        docker push rickchinois/ffxivraidlootapi:latest
+        docker login -u ${{secrets.DOCKER_HUB_USERNAME}} -p ${{secrets.DOCKER_HUB_TOKEN}}
+        docker push ${{secrets.DOCKER_HUB_REPOSITORY}}
