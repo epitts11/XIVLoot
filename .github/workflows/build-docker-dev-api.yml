@@ -17,6 +17,7 @@ jobs:
     - name: Build the API Docker image
       run: |
         DECODED_VALUE=$(echo "${{ secrets.DB_CONNECTION_STRING }}" | base64 --decode)
+        echo "$DECODED_VALUE"
         docker build -f FFXIV-RaidLootAPI/Dockerfile -t rickchinois/ffxivraidlootapi:latest .
         docker run -e DB_CONNECTION_STRING=$DECODED_VALUE -e JWT_TOKEN="${{ secrets.JWT_TOKEN }}" rickchinois/ffxivraidlootapi:latest
         
