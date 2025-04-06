@@ -167,12 +167,29 @@ namespace FFXIV_RaidLootAPI.Models
             int PlayerILevel = get_avg_item_level(context:context);
 
             if (GroupAvgLevel == 0){
+                Console.WriteLine("GroupAvgLevel is 0");
                 return 0;
             }
+            
 
-            decimal score = a * 10 * JobScoreMultiplier[Job] * (PlayerILevel/GroupAvgLevel) + b * 100 * (GroupAvgLevel-PlayerILevel)/(GroupAvgLevel-660) +  
+            Static playerStatic = context.Statics.Find(this.staticId);
+            int staticExpectedMinLevel = 660;
+            if (playerStatic != null)
+            {
+                if (playerStatic.Tier == Tier.SEVEN_TWO)
+                {
+                    staticExpectedMinLevel = 710;
+                }
+                else if (playerStatic.Tier == Tier.SEVEN_4)
+                {
+                    staticExpectedMinLevel = 740;
+                }
+            }
+
+            decimal score = a * 10 * JobScoreMultiplier[Job] * (PlayerILevel/GroupAvgLevel) + b * 100 * (GroupAvgLevel-PlayerILevel)/(GroupAvgLevel-staticExpectedMinLevel) +  
                             c * NRaidBuff * JobGroupMultiplier[Job];
             //Console.WriteLine($"PlayerILevel: {PlayerILevel} PlayerId : {Id}");
+            //Console.WriteLine(score.ToString());
             return score;
         }
 

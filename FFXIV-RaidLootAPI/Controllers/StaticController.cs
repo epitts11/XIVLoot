@@ -572,7 +572,16 @@ namespace FFXIV_RaidLootAPI.Controllers
                 var playerList = context.Players.Where(p => p.staticId == dbStatic.Id).ToList();
                 List<StaticDTO.PlayerInfoDTO> PlayersInfoList = new List<StaticDTO.PlayerInfoDTO>();
 
-                foreach (Players player in playerList){
+                // Add non all players first.
+                foreach (Players player in playerList.Where(p => p.IsAlt == false))
+                {
+                    StaticDTO.PlayerInfoDTO info = player.get_player_info(context,dbStatic);
+                    PlayersInfoList.Add(info);
+                }
+
+                // Add altplayers second so they appear at the end of the list.
+                foreach (Players player in playerList.Where(p => p.IsAlt))
+                {
                     StaticDTO.PlayerInfoDTO info = player.get_player_info(context,dbStatic);
                     PlayersInfoList.Add(info);
                 }

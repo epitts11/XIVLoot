@@ -414,20 +414,31 @@ namespace FFXIV_RaidLootAPI.Controllers
                 {
                     client.BaseAddress = new Uri("https://api.xivgear.app/shortlink/");
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                     Console.WriteLine("HERE4");
+                    //Console.WriteLine("HERE4");
                     Object items = new object();
-                     Console.WriteLine("HERE5");
+                    //Console.WriteLine("HERE5");
 
                     // Extracting uuid from link
 
                    /* https://xivgear.app/?page=sl%7C ac66ee64-8ecd-4382-a52e-2a179f4f991d */
-                    Console.WriteLine(dto.NewEtro);
-                    Console.WriteLine(dto.NewEtro.Split("https://xivgear.app/?page=sl|")[0]);
+                   /* or https://xivgear.app/?page=sl%7C8f2e2ba8-082b-4fd4-912b-a7851ec3e50c&onlySetIndex=6 */
+                    //Console.WriteLine(dto.NewEtro);
+                    //Console.WriteLine(dto.NewEtro.Split("https://xivgear.app/?page=sl|")[0]);
                     
                     List<string> firstTry = dto.NewEtro.Split("xivgear.app/?page=sl|").ToList();
                     List<string> secondTry = dto.NewEtro.Split("xivgear.app/?page=sl%7C").ToList();
                     string uuid = firstTry.Count > 1 ? firstTry[1] : secondTry[1];
-                    Console.WriteLine("HERE6");
+
+                    // XIVGear url sometime specify a page index. 
+                    // In order to avoir error where the url contains additional information
+                    // we will only take the first 36 characters of the uuid which should
+                    // always correspond to the actual uuid of the gearset.
+                    if (uuid.Length >= 36)
+                    {
+                        uuid = uuid.Substring(0, 36);
+                    }
+
+                    //Console.WriteLine("HERE6");
                     Console.WriteLine("Detected uuid : " + uuid);
 
                     try{
