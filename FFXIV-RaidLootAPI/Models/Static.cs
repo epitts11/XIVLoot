@@ -9,8 +9,8 @@ public enum Tier
 {
     None = -1,
     SEVEN_ZERO = 0,
-    SEVEN_TWO,
-    SEVEN_4,
+    SEVEN_TWO=1,
+    SEVEN_4=2,
     EIGhT_ZERO,
     EIGHT_TWO,
     HEIGHT_FOUR

@@ -10,7 +10,7 @@ namespace FFXIV_RaidLootAPI.Models
         {
             new Tuple<Tier, int>(Tier.SEVEN_ZERO, 700),
             new Tuple<Tier, int>(Tier.SEVEN_TWO, 740),
-            new Tuple<Tier, int>(Tier.SEVEN_TWO, 770),
+            new Tuple<Tier, int>(Tier.SEVEN_4, 770),
         };
         public static readonly int ACCESSORY_TOME_COST = 375;
         public static readonly int ARMOR_LOW_COST = 495; // Head, Hands, feet
@@ -19,62 +19,70 @@ namespace FFXIV_RaidLootAPI.Models
         private static readonly Dictionary<Tier, string> TOME_GEAR = new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Quetzalli"},
-            {Tier.SEVEN_TWO, "Historia"}
+            {Tier.SEVEN_TWO, "Historia"},
+            {Tier.SEVEN_4, "Bygone"}
         };
         private static readonly Dictionary<Tier, string> RAID_GEAR = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Dark Horse"},
-            {Tier.SEVEN_TWO, "Babyface"}
+            {Tier.SEVEN_TWO, "Babyface"},
+            {Tier.SEVEN_4, "Grand"}
         };
         private static readonly Dictionary<Tier, string> AUGMENT_TOME = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Augment"},
-            {Tier.SEVEN_TWO, "Augment"}
+            {Tier.SEVEN_TWO, "Augment"},
+            {Tier.SEVEN_4, "Augment"}
         };
 
         private static readonly Dictionary<Tier, string> CRAFTED_GEAR = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Archeo"},
-            {Tier.SEVEN_TWO, "Ceremonial"}
+            {Tier.SEVEN_TWO, "Ceremonial"},
+            {Tier.SEVEN_4, "Courtly Lover"}
         };
         private static readonly Dictionary<Tier, string> NORMAL_RAID = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Light-heavy"},
-            {Tier.SEVEN_TWO, "Cruiser"}
+            {Tier.SEVEN_TWO, "Cruiser"},
+            {Tier.SEVEN_4, "Heavyweight"},
         };
         private static readonly Dictionary<Tier, string> EX_TRIAL = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Resilient"},
-            {Tier.SEVEN_TWO, "NO_NAME"}
+            {Tier.SEVEN_TWO, "NO_NAME"},
+            {Tier.SEVEN_4, "NO_NAME"},
         };
 
         private static readonly Dictionary<Tier, string> EARLY_TOME = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Neo Kingdom"},
-            {Tier.SEVEN_TWO, "NO_NAME"}
+            {Tier.SEVEN_TWO, "NO_NAME"},
+            {Tier.SEVEN_4, "NO_NAME"},
         };
 
         private static readonly Dictionary<Tier, string> EX_WEAPON = 
         new Dictionary<Tier, string>()
         {
             {Tier.SEVEN_ZERO, "Skyruin"},
-            {Tier.SEVEN_TWO, "Queensknight"}
+            {Tier.SEVEN_TWO, "Queensknight"},
+            {Tier.SEVEN_4, "Runaway"},
         }; 
 
 
         private static readonly Dictionary<string,List<string>> GEAR_TYPE_NAME = new Dictionary<string,List<string>> 
         {
-            {"Head",new List<string> {"Circlet", "Face", "Blinder", "Hat", "Turban", "Headband", "Beret","Hood", "Chapeau", "Bandana", ""}},
-            {"Body",new List<string> {"Mail", "Cuirass", "Cloak", "Corselet", "Robe", "Surcoat", "Jacket", "Coat", "Tunic", "Tabard"}},
+            {"Head",new List<string> {"Circlet", "Face", "Blinder", "Hat", "Turban", "Headband", "Beret","Hood", "Chapeau", "Bandana", "Calot", "Headgear", "Cap", "Goggles", "Hairpin"}},
+            {"Body",new List<string> {"Mail", "Cuirass", "Cloak", "Corselet", "Robe", "Surcoat", "Jacket", "Coat", "Tunic", "Tabard", "Jerkin", "Shirt"}},
             {"Hands",new List<string> {"Armlet","Gauntlets", "Gloves", "Armguards", "Halfgloves", "Halfgloves"}},
-            {"Legs",new List<string> {"Bottom","Hose", "Breeches", "Trousers", "Longkilt", "Poleyns", "Brayettes", "Kecks", "Brais"}},
-            {"Feet",new List<string> {"Shoe","Sollerets", "Sabatons", "Longboots", "Sandals", "Boots", "Thighboots"}},
+            {"Legs",new List<string> {"Bottom","Hose", "Breeches", "Trousers", "Longkilt", "Poleyns", "Brayettes", "Kecks", "Brais", "Greaves", "Boots", "Sollerets", "Gaskins", "Halfslops", "Pantaloons", "Sarouel"}},
+            {"Feet",new List<string> {"Shoe","Sollerets", "Sabatons", "Longboots", "Sandals", "Boots", "Thighboots", "Greaves"}},
             {"Earrings",new List<string> {"Earring"}},
             {"Necklace",new List<string> {"Necklace", "Choker"}},
             {"Bracelets",new List<string> {"Bracelet", "Wristband", "Bangle"}},
@@ -171,10 +179,10 @@ namespace FFXIV_RaidLootAPI.Models
             // First figure out the tier of the gear.
             int.TryParse(ItemLevel, out int iLevel);
             Tuple<Tier, int> tierofGear = LIST_TIER_AND_I_LEVEL.FirstOrDefault(t => t.Item2 >= iLevel) ?? LIST_TIER_AND_I_LEVEL.First();
-            Tier gearTier = Tier.SEVEN_TWO;
+            Tier gearTier = Tier.SEVEN_4;
             if (tierofGear != null)
             {
-                gearTier = tierofGear.Item1;
+                //gearTier = tierofGear.Item1;
             }
 
             GearStage stage = GearStage.Preparation; // If nothing it will be preperation, ie : crafted.
@@ -185,7 +193,8 @@ namespace FFXIV_RaidLootAPI.Models
                 stage = GearStage.Upgraded_Tomes;
             else if (name.IndexOf(RAID_GEAR[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Raid;
-            else if (name.IndexOf(EX_TRIAL[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
+            else if (name.IndexOf(EX_TRIAL[gearTier], StringComparison.OrdinalIgnoreCase) >= 0
+            || name.IndexOf("Word of the rail", StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Extreme;
             else if (name.IndexOf(NORMAL_RAID[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Raid_Normal;

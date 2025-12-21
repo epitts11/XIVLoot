@@ -1,12 +1,12 @@
 x = "INSERT [dbo].[Gears] ([Id], [Name], [GearLevel], [GearType], [GearStage], [GearCategory], [GearWeaponCategory], [IconPath], [EtroGearId], [Tier]) VALUES (1, N'No Equipment', 0, 0, 0, 0, 0, N'0', 0, -1)"
 
-GearToGen = [(740, "Normal raid", 6), 
-             (740, "Crafted", 1), 
-             (750, "Tome gear", 2), 
-             (760,"Augmented tome", 3), 
-             (760, "Raid", 4), 
-             (745, "Extreme", 5)]
-tier = 1
+GearToGen = [(770, "Normal raid", 6), 
+             (770, "Crafted", 1), 
+             (780, "Tome gear", 2), 
+             (790,"Augmented tome", 3), 
+             (790, "Raid", 4), 
+             (775, "Extreme", 5)]
+tier = 2
 genSQLString = """
 USE [LootManagementDB]
 GO
@@ -51,6 +51,8 @@ for gearInfo in GearToGen:
     stage=gearInfo[2]
     for type in GearType:  
         if name == "Extreme" and type in [2,3,4,5,6,7,8,9,10,11]:# only weapon ,2,3,4,5,6]: # Only acc and weapon
+            continue
+        if name == "Normal raid" and type in [1]:
             continue
         for cat in GearCategory:
             genSQLString+= (f"INSERT [dbo].[Gears] ([Id], [Name], [GearLevel], [GearType], [GearStage], [GearCategory], [GearWeaponCategory], [IconPath], [EtroGearId], [Tier]) VALUES ({id}, N'{name}', {iLevel}, {type}, {stage}, {cat}, N'0', N'0', 0, {tier})\n")

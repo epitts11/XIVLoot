@@ -241,7 +241,7 @@ namespace FFXIV_RaidLootAPI.Controllers
                             string? JobName = responseData!["jobName"].ToString().Split(" ").Last();
                             Console.WriteLine(JobName);
                             string? IconPath = responseData["iconPath"].ToString();
-                            if (int.Parse(GearILevel!) < 690 || GearName!.Contains("Shield"))
+                            if (int.Parse(GearILevel!) < 770 || GearName!.Contains("Shield"))
                                 continue;
                             string? EquipSlotCategory = responseData["slotName"].ToString();
                             //Dictionary<string, object>? equipSlot = JsonSerializer.Deserialize<Dictionary<string, object>>(EquipSlotCategory!);
@@ -316,8 +316,8 @@ namespace FFXIV_RaidLootAPI.Controllers
             return Ok();
             }
             }
-        }
-        */
+        }*/
+        
 #endregion
         private GearType getGearTypeFromInfo(string equipSlot){
             if (equipSlot == "body") 
