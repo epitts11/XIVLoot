@@ -43,7 +43,7 @@ GearType=[2,3,4,5,6,7,8,9,10,11]
 #RightRing = 10,
 #LeftRing = 11
 
-id = 1000
+id = 1530
 
 for gearInfo in GearToGen:
     name = gearInfo[1]

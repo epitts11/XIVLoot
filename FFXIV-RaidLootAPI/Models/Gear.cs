@@ -194,7 +194,8 @@ namespace FFXIV_RaidLootAPI.Models
             else if (name.IndexOf(RAID_GEAR[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Raid;
             else if (name.IndexOf(EX_TRIAL[gearTier], StringComparison.OrdinalIgnoreCase) >= 0
-            || name.IndexOf("Word of the rail", StringComparison.OrdinalIgnoreCase) >= 0)
+                    || name.IndexOf("Word of the rail", StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("Book of the Doomed", StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Extreme;
             else if (name.IndexOf(NORMAL_RAID[gearTier], StringComparison.OrdinalIgnoreCase) >= 0)
                 stage = GearStage.Raid_Normal;
